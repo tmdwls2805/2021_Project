@@ -3,7 +3,10 @@ from preprocess import *
 PATH = 'data_in/ChatBotData.csv_short'
 VOCAB_PATH = 'data_in/vocabulary.txt'
 
-inputs, outputs = load_data(PATH)
+inputs, outputs, label = load_data(PATH)
+print(inputs)
+print(outputs)
+print(label)
 
 char2idx, idx2char, vocab_size = load_vocabulary(PATH, VOCAB_PATH, tokenize_as_morph=False)
 

@@ -30,9 +30,9 @@ def load_data(path):
     # 판다스를 통해서 데이터를 불러온다.
     data_df = pd.read_csv(path, header=0)
     # 질문과 답변 열을 가져와 question과 answer에 넣는다.
-    question, answer = list(data_df['Q']), list(data_df['A'])
+    question, answer, label = list(data_df['Q']), list(data_df['A']), list(data_df['label'])
 
-    return question, answer
+    return question, answer, label
 
 
 def data_tokenizer(data):
