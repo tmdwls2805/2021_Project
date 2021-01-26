@@ -1,18 +1,8 @@
 import tensorflow as tf
-
 from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
 import matplotlib.pyplot as plt
 
 from preprocess import *
-
-# 시각화 함수
-def plot_graphs(history, string):
-    plt.plot(history.history[string])
-    plt.plot(history.history['val_'+string], '')
-    plt.xlabel("Epochs")
-    plt.ylabel(string)
-    plt.legend([string, 'val_'+string])
-    plt.show()
 
 # 학습 데이터 경로 정의
 DATA_IN_PATH = '../data_in/'
@@ -42,13 +32,22 @@ MAX_SEQUENCE = 25
 EPOCH = 30
 UNITS = 1024
 EMBEDDING_DIM = 256
-VALIDATION_SPLIT = 0.1 
+VALIDATION_SPLIT = 0.1
 
 char2idx = prepro_configs['char2idx']
 idx2char = prepro_configs['idx2char']
 std_index = prepro_configs['std_symbol']
 end_index = prepro_configs['end_symbol']
 vocab_size = prepro_configs['vocab_size']
+
+# 시각화 함수
+def plot_graphs(history, string):
+    plt.plot(history.history[string])
+    plt.plot(history.history['val_'+string], '')
+    plt.xlabel("Epochs")
+    plt.ylabel(string)
+    plt.legend([string, 'val_'+string])
+    plt.show()
 
 ## 모델
 # 인코더
@@ -198,20 +197,4 @@ class seq2seq(tf.keras.Model):
 model = seq2seq(vocab_size, EMBEDDING_DIM, UNITS, UNITS, BATCH_SIZE, char2idx[end_index])
 model.compile(loss=loss, optimizer=tf.keras.optimizers.Adam(1e-3), metrics=[accuracy])
 #model.run_eagerly = True
-
-# 학습 진행
-PATH = DATA_OUT_PATH + MODEL_NAME
-if not (os.path.isdir(PATH)):
-    os.makedirs(os.path.join(PATH))
-
-checkpoint_path = DATA_OUT_PATH + MODEL_NAME + '/weights.h5'
-
-cp_callback = ModelCheckpoint(
-    checkpoint_path, monitor='val_accuracy', verbose=1, save_best_only=True, save_weights_only=True)
-
-earlystop_callback = EarlyStopping(monitor='val_accuracy', min_delta=0.0001, patience=10)
-
-history = model.fit([index_inputs, index_outputs], index_targets,
-                    batch_size=BATCH_SIZE, epochs=EPOCH,
-                    validation_split=VALIDATION_SPLIT, callbacks=[earlystop_callback, cp_callback])
 
