@@ -4,15 +4,15 @@ PATH = 'data_in/ChatBotData.csv_short'
 VOCAB_PATH = 'data_in/vocabulary.txt'
 
 inputs, outputs, label = load_data(PATH)
-print(inputs)
-print(outputs)
-print(label)
 
 char2idx, idx2char, vocab_size = load_vocabulary(PATH, VOCAB_PATH, tokenize_as_morph=False)
 
 index_inputs, input_seq_len = enc_processing(inputs, char2idx, tokenize_as_morph=False)
 index_outputs, output_seq_len = dec_output_processing(outputs, char2idx, tokenize_as_morph=False)
 index_targets = dec_target_processing(outputs, char2idx, tokenize_as_morph=False)
+
+
+intent_label = label
 
 data_configs = {}
 data_configs['char2idx'] = char2idx
