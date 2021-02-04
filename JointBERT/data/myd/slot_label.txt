@@ -1,0 +1,9 @@
+O
+B-type
+I-type
+B-meal
+I-meal
+B-from_city
+I-from_city
+B-to_city
+I-to_city

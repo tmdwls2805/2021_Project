@@ -27,8 +27,8 @@ def main(args):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
 
-    parser.add_argument("--task", default="atis", required=False, type=str, help="The name of the task to train")
-    parser.add_argument("--model_dir", default="atis_model", required=False, type=str, help="Path to save, load model")
+    parser.add_argument("--task", default="myd", required=False, type=str, help="The name of the task to train")
+    parser.add_argument("--model_dir", default="myd_model", required=False, type=str, help="Path to save, load model")
     parser.add_argument("--data_dir", default="./data", type=str, help="The input data dir")
     parser.add_argument("--intent_label_file", default="intent_label.txt", type=str, help="Intent Label file")
     parser.add_argument("--slot_label_file", default="slot_label.txt", type=str, help="Slot Label file")
@@ -53,8 +53,8 @@ if __name__ == '__main__':
     parser.add_argument('--logging_steps', type=int, default=200, help="Log every X updates steps.")
     parser.add_argument('--save_steps', type=int, default=200, help="Save checkpoint every X updates steps.")
 
-    parser.add_argument("--do_train", default="./data/atis/train", action="store_true", help="Whether to run training.")
-    parser.add_argument("--do_eval", default="./data/atis/test", action="store_true", help="Whether to run eval on the test set.")
+    parser.add_argument("--do_train", default="./data/myd/train", action="store_true", help="Whether to run training.")
+    parser.add_argument("--do_eval", default="./data/myd/test", action="store_true", help="Whether to run eval on the test set.")
     parser.add_argument("--no_cuda", action="store_true", help="Avoid using CUDA when available")
 
     parser.add_argument("--ignore_index", default=0, type=int,

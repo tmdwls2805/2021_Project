@@ -1,0 +1,6 @@
+UNK
+flight
+flight
+flight#fare
+flight#meal
+flight#time

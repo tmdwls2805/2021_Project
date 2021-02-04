@@ -99,14 +99,14 @@ class JointProcessor(object):
             for s in slot.split():
                 slot_labels.append(self.slot_labels.index(s) if s in self.slot_labels else self.slot_labels.index("UNK"))
 
-            assert len(words) == len(slot_labels)
+            assert len(words) == len(slot_labels)  # slot label
             examples.append(InputExample(guid=guid, words=words, intent_label=intent_label, slot_labels=slot_labels))
         return examples
 
     def get_examples(self, mode):
         """
         Args:
-            mode: train, dev, test
+            mode: train, dev, tests
         """
         data_path = os.path.join(self.args.data_dir, self.args.task, mode)
         logger.info("LOOKING AT {}".format(data_path))
@@ -118,7 +118,8 @@ class JointProcessor(object):
 
 processors = {
     "atis": JointProcessor,
-    "snips": JointProcessor
+    "snips": JointProcessor,
+    "myd": JointProcessor
 }
 
 
@@ -224,6 +225,7 @@ def load_and_cache_examples(args, tokenizer, mode):
     if os.path.exists(cached_features_file):
         logger.info("Loading features from cached file %s", cached_features_file)
         features = torch.load(cached_features_file)
+
     else:
         # Load data features from dataset file
         logger.info("Creating features from dataset file at %s", args.data_dir)
@@ -249,6 +251,11 @@ def load_and_cache_examples(args, tokenizer, mode):
     all_token_type_ids = torch.tensor([f.token_type_ids for f in features], dtype=torch.long)
     all_intent_label_ids = torch.tensor([f.intent_label_id for f in features], dtype=torch.long)
     all_slot_labels_ids = torch.tensor([f.slot_labels_ids for f in features], dtype=torch.long)
+    print(all_slot_labels_ids)
+    print(all_intent_label_ids)
+    print(all_token_type_ids)
+    print(all_attention_mask)
+    print(all_input_ids)
 
     dataset = TensorDataset(all_input_ids, all_attention_mask,
                             all_token_type_ids, all_intent_label_ids, all_slot_labels_ids)
